@@ -21,6 +21,9 @@ const Header = () => {
 
   return (
     <div>
+      <div>
+        <h1>Hello</h1>
+      </div>
       <Nav>
         <Link>
           <Logo to="/">
