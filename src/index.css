@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gupter:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #040714;
+  color: #f9f9f9;
+  font-family: Avenir-Roman, sans-serif;
+
+}
+
+a {
+  color: #f9f9f9;
+  text-decoration: none;
+}
+
+
+@media only screen and (min-width:768px) {
+  body{
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width:480px) and (max-width:768px) {
+  body{
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width:479px) {
+  body{
+    font-size: 14px;
+  }
+}
+
