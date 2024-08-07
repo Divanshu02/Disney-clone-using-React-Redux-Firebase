@@ -1,31 +1,61 @@
 import { useContext } from "react";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataFetchContext from "../context/DataFetchContext";
+import { ThreeCircles } from "react-loader-spinner";
+
 const NewDisney = () => {
+  // useLocation() returns an object that contains information on the current page URL.
+  //   pathname: the part that comes after the domain name, e.g., /products.
+  // search: the query string, e.g., ?id=5.
+  // hash: the hash, e.g., #pricing
+
+  const location = useLocation();
+  const { pathname } = location;
   const data = useContext(DataFetchContext);
   console.log("data", data);
-  let { popular_movies, top_rated_movies, trending_movies } = data;
+  let { top_rated_movies, loader } = data;
 
   // console.log("recommends::",popular_movies.results)
   return (
     <>
-      <h3 style={{fontSize:"2em"}}>New to Disney+</h3>
-      <Wrapper>
-      {top_rated_movies.results &&
-          top_rated_movies.results.slice(8,16).map((top_rated_movie,key) => {
-            return (
-              <Content key={key}>
-                <Link to={`https://api.themoviedb.org/3/movie/${top_rated_movie.id}?api_key=90c1dcb9cc63b070b76bdf3e245e31c0`}>
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${top_rated_movie.backdrop_path}`}
-                  ></img>
-                </Link>
-              </Content>
-            );
-          })}
-      </Wrapper>
+      {loader ? (
+        <ThreeCircles
+          visible={true}
+          height="100"
+          width="100"
+          color="#acb8ac"
+          ariaLabel="three-circles-loading"
+          wrapperStyle={{ position: "absolute", left: "50%" }}
+          wrapperClass=""
+        />
+      ) : (
+        <>
+          {pathname === "/series" ? (
+            ""
+          ) : (
+            <h3 style={{ fontSize: "2em" }}>New to Disney+</h3>
+          )}
+
+          <Wrapper>
+            {top_rated_movies.results &&
+              top_rated_movies.results
+                .slice(pathname==="/series"?7:8, pathname==="/series"?-1:16)
+                .map((top_rated_movie, key) => {
+                  return (
+                    <Content key={key}>
+                      <Link to={`/detail/${top_rated_movie.id}`}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/original${top_rated_movie.backdrop_path}`}
+                        ></img>
+                      </Link>
+                    </Content>
+                  );
+                })}
+          </Wrapper>
+        </>
+      )}
     </>
   );
 };

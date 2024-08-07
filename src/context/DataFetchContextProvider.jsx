@@ -5,23 +5,31 @@ const DataFetchContextProvider = ({ children }) => {
   const popularMoviesUrl="https://api.themoviedb.org/3/movie/popular?api_key=90c1dcb9cc63b070b76bdf3e245e31c0";
   const trendingMoviesUrl="https://api.themoviedb.org/3/trending/movie/day?api_key=90c1dcb9cc63b070b76bdf3e245e31c0";
   const topRatedMoviesUrl="https://api.themoviedb.org/3/movie/top_rated?api_key=90c1dcb9cc63b070b76bdf3e245e31c0";
-  const originalsUrl="https://api.themoviedb.org/3/tv/top_rated?api_key=90c1dcb9cc63b070b76bdf3e245e31c0";
+  const originalsUrl="https://api.themoviedb.org/3/movie/upcoming?api_key=90c1dcb9cc63b070b76bdf3e245e31c0";
+
 
   const [apiData, setApiData] = useState({
-    popular_movies: [],
+    popular_movies: null,
     trending_movies: [],
     top_rated_movies: [],
     originals: [],
+    loader:true
   });
 
   // console.log("context", apiData);
   async function fetchData(url, type) {
+    setApiData((prev)=>{
+      return {...prev,loader:true}
+    })
     console.log("type::",type)
     const res = await fetch(url);
     const data = await res.json();
     setApiData((prev) => {
       return { ...prev, [type]: data };
     });
+    setApiData((prev)=>{
+      return {...prev,loader:false}
+    })
   }
 
   useEffect(() => {

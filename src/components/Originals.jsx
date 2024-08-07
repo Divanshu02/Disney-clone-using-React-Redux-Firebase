@@ -1,33 +1,49 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataFetchContext from "../context/DataFetchContext";
+import { ThreeCircles } from "react-loader-spinner";
 
 const Originals = () => {
   const data = useContext(DataFetchContext);
+  const location=useLocation()
+  const {pathname}=location
   // console.log("data", data);
-  let {  originals } = data;
+  let { originals, loader } = data;
 
   // console.log("recommends::",popular_movies.results)
   return (
     <>
-      <h3 style={{ fontSize: "2em" }}>Originals</h3>
-      <Wrapper>
-        {originals.results &&
-          originals.results.slice(0, 8).map((original, key) => {
-            return (
-              <Content key={key}>
-                <Link
-                  to={`https://api.themoviedb.org/3/movie/${original.id}?api_key=90c1dcb9cc63b070b76bdf3e245e31c0`}
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${original.backdrop_path}`}
-                  ></img>
-                </Link>
-              </Content>
-            );
-          })}
-      </Wrapper>
+      {loader ? (
+        <ThreeCircles
+          visible={true}
+          height="100"
+          width="100"
+          color="#acb8ac"
+          ariaLabel="three-circles-loading"
+          wrapperStyle={{ position: "absolute", left: "50%" }}
+          wrapperClass=""
+        />
+      ) : (
+        <>
+        {pathname === "/originals" ?(''):(<h3 style={{ fontSize: "2em" }}>Originals</h3>)}
+          
+          <Wrapper>
+            {originals.results &&
+              originals.results.slice(pathname==="/originals"?1:8, pathname==="/originals"?30:16).map((original, key) => {
+                return (
+                  <Content key={key}>
+                    <Link to={`/detail/${original.id}`}>
+                      <img
+                        src={`https://image.tmdb.org/t/p/original${original.backdrop_path}`}
+                      ></img>
+                    </Link>
+                  </Content>
+                );
+              })}
+          </Wrapper>
+        </>
+      )}
     </>
   );
 };

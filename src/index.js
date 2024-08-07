@@ -14,6 +14,10 @@ import store from "./Redux/store";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Detail from "./components/Detail";
+import Originals from "./components/Originals";
+import Trending from "./components/Trending";
+import NewDisney from "./components/NewDisney";
+import Recommends from "./components/Recommends";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,9 +26,13 @@ const router = createBrowserRouter(
       <Route path="/" element={<App />}>
         <Route index element={<Login />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/originals" element={<Originals/>}/>
+        <Route path="/movies" element={<Trending/>}/>
+        <Route path="/series" element={<NewDisney/>}/>
+        <Route path="/upcoming" element={<Recommends/>}/>
         <Route path="/detail/:id" element={<Detail/>}/>
       </Route>
-    </>
+    </> 
   )
 );
 

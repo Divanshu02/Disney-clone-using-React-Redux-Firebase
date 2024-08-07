@@ -5,22 +5,29 @@ import img from "../images/3d-render-thumb-up-sign-isolated-hand-gesture.jpg";
 import { ThreeCircles } from "react-loader-spinner";
 
 const Detail = () => {
-  const [movieDetails, setMovieDetails] = useState("");
+  const [movieDetails, setMovieDetails] = useState();
+  const [tvDetails, setTvDetails] = useState("");
   const { id } = useParams();
   const url = `https://api.themoviedb.org/3/movie/${id}?api_key=90c1dcb9cc63b070b76bdf3e245e31c0`;
+  const url2 = `https://api.themoviedb.org/3/tv/${id}?api_key=90c1dcb9cc63b070b76bdf3e245e31c0`;
 
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log("detail", data);
         setMovieDetails(data);
+      });
+    fetch(url2)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("detail", data);
+        setTvDetails(data);
       });
   }, []);
 
-  return (   
+  return (
     <>
-     
       {movieDetails ? (
         <div>
           {movieDetails.backdrop_path ? (
@@ -31,7 +38,7 @@ const Detail = () => {
               />
             </Background>
           ) : (
-            "NO"
+            ""
           )}
           <Content>
             <h2>{movieDetails.original_title}</h2>

@@ -1,33 +1,56 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataFetchContext from "../context/DataFetchContext";
+import { ThreeCircles } from "react-loader-spinner";
 
 const Recommends = () => {
   const data = useContext(DataFetchContext);
+  const location = useLocation();
+  const { hash, pathname, search } = location;
+  console.log("location", hash, pathname, search);
   // console.log("data", data);
-  let { popular_movies, top_rated_movies, trending_movies } = data;
+  let { popular_movies, loader } = data;
 
   // console.log("recommends::",popular_movies.results)
   return (
     <>
-      <h3 style={{ fontSize: "2em" }}>Recommended for you</h3>
-      <Wrapper>
-        {popular_movies.results &&
-          popular_movies.results.slice(0, 8).map((pop_movie, key) => {
-            return (
-              <Content key={key}>
-                <Link
-                  to={`/detail/${pop_movie.id}`}
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${pop_movie.backdrop_path}`}
-                  ></img>
-                </Link>
-              </Content>
-            );
-          })}
-      </Wrapper>
+      {loader ? (
+        <ThreeCircles
+          visible={true}
+          height="100"
+          width="100"
+          color="#acb8ac"
+          ariaLabel="three-circles-loading"
+          wrapperStyle={{ position: "absolute", left: "50%" }}
+          wrapperClass=""
+        />
+      ) : (
+        <>
+          {pathname === "/upcoming" ? (
+            ""
+          ) : (
+            <h3 style={{ fontSize: "2em" }}>Recommended for you</h3>
+          )}
+
+          {popular_movies && (
+            <Wrapper>
+              {popular_movies.results &&
+                popular_movies.results.slice(pathname==="/upcoming"?1:8, pathname==="/upcoming"?-1:16).map((pop_movie, key) => {
+                  return (
+                    <Content key={key}>
+                      <Link to={`/detail/${pop_movie.id}`}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/original${pop_movie.backdrop_path}`}
+                        ></img>
+                      </Link>
+                    </Content>
+                  );
+                })}
+            </Wrapper>
+          )}
+        </>
+      )}
     </>
   );
 };

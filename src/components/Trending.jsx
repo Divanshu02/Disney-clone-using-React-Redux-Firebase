@@ -1,33 +1,58 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataFetchContext from "../context/DataFetchContext";
+import { ThreeCircles } from "react-loader-spinner";
 
 const Trending = () => {
   const data = useContext(DataFetchContext);
+  const location = useLocation();
+  const { pathname } = location;
   // console.log("data", data);
-  let {  trending_movies } = data;
+  let { trending_movies, loader } = data;
 
   // console.log("recommends::",popular_movies.results)
   return (
     <>
-      <h3 style={{ fontSize: "2em" }}>Trending</h3>
-      <Wrapper>
-        {trending_movies.results &&
-          trending_movies.results.slice(0, 8).map((trending_movie, key) => {
-            return (
-              <Content key={key}>
-                <Link
-                  to={`https://api.themoviedb.org/3/movie/${trending_movie.id}?api_key=90c1dcb9cc63b070b76bdf3e245e31c0`}
-                >
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${trending_movie.backdrop_path}`}
-                  ></img>
-                </Link>
-              </Content>
-            );
-          })}
-      </Wrapper>
+      {loader ? (
+        <ThreeCircles
+          visible={true}
+          height="100"
+          width="100"
+          color="#acb8ac"
+          ariaLabel="three-circles-loading"
+          wrapperStyle={{ position: "absolute", left: "50%" }}
+          wrapperClass=""
+        />
+      ) : (
+        <>
+          {pathname === "/movies" ? (
+            ""
+          ) : (
+            <h3 style={{ fontSize: "2em" }}>Trending</h3>
+          )}
+
+          <Wrapper>
+            {trending_movies.results &&
+              trending_movies.results
+                .slice(
+                  pathname === "/movies" ? 1 : 8,
+                  pathname === "/movies" ? 30 : 16
+                )
+                .map((trending_movie, key) => {
+                  return (
+                    <Content key={key}>
+                      <Link to={`/detail/${trending_movie.id}`}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/original${trending_movie.backdrop_path}`}
+                        ></img>
+                      </Link>
+                    </Content>
+                  );
+                })}
+          </Wrapper>
+        </>
+      )}
     </>
   );
 };

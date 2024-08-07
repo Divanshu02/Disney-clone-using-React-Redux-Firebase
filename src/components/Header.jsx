@@ -9,56 +9,58 @@ import movieIcon from "../images/movie-icon.svg";
 import seriesIcon from "../images/series-icon.svg";
 import FirebaseContext from "../context/FirebaseContext";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
-  const { SigninWithGoogle,SignoutUser } =
-    useContext(FirebaseContext);
+  const { SigninWithGoogle, SignoutUser } = useContext(FirebaseContext);
   const { name, photo } = useSelector((state) => state);
   // console.log(SigninWithGoogle)
 
-
-
   return (
-    <div>
-      <div>
-        <h1>Hello</h1>
-      </div>
+    <>
       <Nav>
-        <Link>
-          <Logo to="/">
+        <NavLink to="/home">
+          <Logo>
             <img src={disneylogo} alt="disneyLogo" />
           </Logo>
-        </Link>
+        </NavLink>
         {!name ? (
           <Login onClick={SigninWithGoogle}>LOGIN</Login>
         ) : (
           <>
             <Navmenu>
-              <Link to="/home">
+              <NavLink to="/home">
                 <img src={homeIcon} alt="homeIcon" />
                 <span>HOME</span>
-              </Link>
-              <a href="/search">
+              </NavLink>
+              {/* <a href="/search">
                 <img src={searchIcon} alt="searchIcon" />
                 <span>SEARCH</span>
               </a>
               <a href="/watchlist">
                 <img src={watchlistIcon} alt="watchlistIcon" />
                 <span>WATCHLIST</span>
-              </a>
-              <a href="/originals">
+              </a> */}
+              <NavLink to="/originals">
                 <img src={originalIcon} alt="originalIcon" />
                 <span>ORIGINALS</span>
-              </a>
-              <a href="/movies">
+              </NavLink>
+              <NavLink to="/movies">
                 <img src={movieIcon} alt="movieIcon" />
                 <span>MOVIES</span>
-              </a>
-              <a href="/series">
+              </NavLink>
+              <NavLink to="/series">
                 <img src={seriesIcon} alt="seriesIcon" />
                 <span>SERIES</span>
-              </a>
+              </NavLink>
+              <NavLink
+                to="/upcoming"
+                className="nav-link"
+                activeClassName="active"
+              >
+                <img src={movieIcon} alt="movieIcon" />
+                <span>Upcoming</span>
+              </NavLink>
             </Navmenu>
             <SignOut>
               <img
@@ -68,13 +70,13 @@ const Header = () => {
                 alt="userLogo"
               ></img>
               <DropDown>
-                <span onClick={()=>SignoutUser()}>SignOut</span>
+                <span onClick={() => SignoutUser()}>SignOut</span>
               </DropDown>
             </SignOut>
           </>
         )}
       </Nav>
-    </div>
+    </>
   );
 };
 
@@ -96,7 +98,7 @@ const Nav = styled.nav`
 const Logo = styled.div`
   padding: 0;
   width: 80px;
-  margin-top: 4px;
+  margin-top: -3px;
   max-height: 70px;
   font-size: 0;
   display: inline-block;
@@ -117,6 +119,7 @@ const Navmenu = styled.div`
   margin: 0px;
   padding: 0px;
   position: relative;
+  bottom: -5px;
   margin-right: auto;
   margin-left: 25px;
 
@@ -133,7 +136,7 @@ const Navmenu = styled.div`
 
     span {
       color: rgb(249, 249, 249);
-      font-size: 13px;
+      font-size: 15px;
       letter-spacing: 1.42px;
       line-height: 1.08px;
       padding: 2px 0px;
@@ -154,13 +157,16 @@ const Navmenu = styled.div`
     }
 
     &:hover {
-      
       span:before {
         transform: scaleX(1);
       }
     }
   }
 
+  a.active span {
+    font-weight: bold;
+    color: #df8686;
+  }
   @media (max-width: 800px) {
     display: none;
   }
@@ -195,38 +201,36 @@ const DropDown = styled.div`
   width: 100px;
   opacity: 0;
 
-  span{
-    &:hover{
+  span {
+    &:hover {
       color: #755991;
     }
-    &:active{
+    &:active {
       color: #71489a;
     }
   }
-
 `;
 
 const SignOut = styled.div`
-cursor: pointer;
-position: relative;
-height: 48px;
-width: 48px;
-display: flex;
-align-items: center;
-justify-content: center;
+  cursor: pointer;
+  position: relative;
+  height: 48px;
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-img{
-  border-radius: 50%;
-  width: 100%;
-  height: 100%;
-}
-&:hover{
-  ${DropDown}{
-    opacity: 1;
-    transition-duration: 1s;
+  img {
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
   }
-
-}
+  &:hover {
+    ${DropDown} {
+      opacity: 1;
+      transition-duration: 1s;
+    }
+  }
 `;
 
 export default Header;
