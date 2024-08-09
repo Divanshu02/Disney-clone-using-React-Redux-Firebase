@@ -83,29 +83,28 @@ const Carousel = styled(Slider)`
 `;
 
 const Wrap = styled.div`
-/* border: 2px solid red; */
-cursor: pointer;
-position: relative;
-
-
-a{
-  border-radius: 4px;
-  box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px, rgb(0 0 0/73%) 0px 16px 10px -10px;
+  /* border: 2px solid red; */
   cursor: pointer;
-  display: block;
-  padding: 4px; 
-  img{
-    width: 100%;
-    height: 100%;
-  } 
+  position: relative;
 
-  &:hover{
-    padding: 0;
-    border: 4px solid rgba(249,249,249,0.8);
-    transition-duration: 200ms;
+  a {
+    border-radius: 4px;
+    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
+      rgb(0 0 0/73%) 0px 16px 10px -10px;
+    cursor: pointer;
+    display: block;
+    padding: 4px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    &:hover {
+      padding: 0;
+      border: 4px solid rgba(249, 249, 249, 0.8);
+      transition-duration: 200ms;
+    }
   }
-
-}
 `;
 
 export default ImgSlider;

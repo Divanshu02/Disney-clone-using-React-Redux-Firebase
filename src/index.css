@@ -14,14 +14,16 @@
 }
 
 
-
-/* div a.active span {
-  font-weight: bold;
-  color: red;
-} */
 html {
   scroll-behavior: smooth;
 }
+
+
+
+div a span.active{
+  color:red
+}
+
 
 body {
   background-color: #040714;

@@ -6,8 +6,8 @@ import { ThreeCircles } from "react-loader-spinner";
 
 const Originals = () => {
   const data = useContext(DataFetchContext);
-  const location=useLocation()
-  const {pathname}=location
+  const location = useLocation();
+  const { pathname } = location;
   // console.log("data", data);
   let { originals, loader } = data;
 
@@ -26,21 +26,30 @@ const Originals = () => {
         />
       ) : (
         <>
-        {pathname === "/originals" ?(''):(<h3 style={{ fontSize: "2em" }}>Originals</h3>)}
-          
+          {pathname === "/originals" ? (
+            ""
+          ) : (
+            <h3 style={{ fontSize: "2em" }}>Originals</h3>
+          )}
+
           <Wrapper>
             {originals.results &&
-              originals.results.slice(pathname==="/originals"?1:8, pathname==="/originals"?30:16).map((original, key) => {
-                return (
-                  <Content key={key}>
-                    <Link to={`/detail/${original.id}`}>
-                      <img
-                        src={`https://image.tmdb.org/t/p/original${original.backdrop_path}`}
-                      ></img>
-                    </Link>
-                  </Content>
-                );
-              })}
+              originals.results
+                .slice(
+                  pathname === "/originals" ? 1 : 8,
+                  pathname === "/originals" ? 30 : 16
+                )
+                .map((original, key) => {
+                  return (
+                    <Content key={key}>
+                      <Link to={`/detail/${original.id}`}>
+                        <img
+                          src={`https://image.tmdb.org/t/p/original${original.backdrop_path}`}
+                        ></img>
+                      </Link>
+                    </Content>
+                  );
+                })}
           </Wrapper>
         </>
       )}

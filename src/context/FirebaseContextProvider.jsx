@@ -9,14 +9,14 @@ import { useDispatch } from "react-redux";
 import { setSignOutState, setUserLoginDetails } from "../Redux/slices/userSlice";
 import { useNavigate } from "react-router-dom";
 const firebaseConfig = {
-  apiKey: "AIzaSyABWDPxLp5ljeYq0zxrRjv8Flxhh1bCXKk",
+  apiKey: `${process.env.REACT_APP_FIREBASE_API_KEY}`,
   authDomain: "disneyplus-clone-8415e.firebaseapp.com",
   projectId: "disneyplus-clone-8415e",
   storageBucket: "disneyplus-clone-8415e.appspot.com",
-  messagingSenderId: "731453350281",
-  appId: "1:731453350281:web:c0903046d6a64cd1f60158",
-  measurementId: "G-3C3LESJQ49",
-};
+  messagingSenderId: `${process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID}`,
+  appId: `${process.env.REACT_APP_FIREBASE_APP_ID}`,
+  measurementId: `${process.env.REACT_APP_FIREBASE_MEASUREMENT_ID}`,
+};  
 
 //   Initializing app and other configurations
 const firebaseApp = initializeApp(firebaseConfig);
@@ -42,7 +42,7 @@ const FirebaseContextProvider = ({ children }) => {
       })
     );
   }
-
+ 
   function removeUser(){
     dispatch(setSignOutState())
   }
@@ -50,7 +50,7 @@ const FirebaseContextProvider = ({ children }) => {
   function SigninWithGoogle() {
     try {
       signInWithPopup(firebaseAuth, googleProvider).then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         setUser(result.user);
       });
     } catch (e) {
@@ -61,17 +61,18 @@ const FirebaseContextProvider = ({ children }) => {
   function SignoutUser() {
     signOut(firebaseAuth);
     removeUser();
-    navigate("/")
+  
   }
    
   function ManageAuthStateOnChange() {
     onAuthStateChanged(firebaseAuth, (user) => {
       if (user) {
-        console.log("SignedinSuccess", user);
+        // console.log("SignedinSuccess", user);
         setUser(user);
         navigate("/home")
       } else {
         console.log("user is signed out", user);
+        navigate("/")
       } 
     });
   }

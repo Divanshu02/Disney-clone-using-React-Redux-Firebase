@@ -8,7 +8,7 @@ const Recommends = () => {
   const data = useContext(DataFetchContext);
   const location = useLocation();
   const { hash, pathname, search } = location;
-  console.log("location", hash, pathname, search);
+  // console.log("location", hash, pathname, search);
   // console.log("data", data);
   let { popular_movies, loader } = data;
 
@@ -36,17 +36,22 @@ const Recommends = () => {
           {popular_movies && (
             <Wrapper>
               {popular_movies.results &&
-                popular_movies.results.slice(pathname==="/upcoming"?1:8, pathname==="/upcoming"?-1:16).map((pop_movie, key) => {
-                  return (
-                    <Content key={key}>
-                      <Link to={`/detail/${pop_movie.id}`}>
-                        <img
-                          src={`https://image.tmdb.org/t/p/original${pop_movie.backdrop_path}`}
-                        ></img>
-                      </Link>
-                    </Content>
-                  );
-                })}
+                popular_movies.results
+                  .slice(
+                    pathname === "/upcoming" ? 1 : 8,
+                    pathname === "/upcoming" ? -1 : 16
+                  )
+                  .map((pop_movie, key) => {
+                    return (
+                      <Content key={key}>
+                        <Link to={`/detail/${pop_movie.id}`}>
+                          <img
+                            src={`https://image.tmdb.org/t/p/original${pop_movie.backdrop_path}`}
+                          ></img>
+                        </Link>
+                      </Content>
+                    );
+                  })}
             </Wrapper>
           )}
         </>

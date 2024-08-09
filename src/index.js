@@ -18,7 +18,7 @@ import Originals from "./components/Originals";
 import Trending from "./components/Trending";
 import NewDisney from "./components/NewDisney";
 import Recommends from "./components/Recommends";
-
+// import * from ".env"
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
@@ -26,19 +26,19 @@ const router = createBrowserRouter(
       <Route path="/" element={<App />}>
         <Route index element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/originals" element={<Originals/>}/>
-        <Route path="/movies" element={<Trending/>}/>
-        <Route path="/series" element={<NewDisney/>}/>
-        <Route path="/upcoming" element={<Recommends/>}/>
-        <Route path="/detail/:id" element={<Detail/>}/>
+        <Route path="/originals" element={<Originals />} />
+        <Route path="/movies" element={<Trending />} />
+        <Route path="/series" element={<NewDisney />} />
+        <Route path="/upcoming" element={<Recommends />} />
+        <Route path="/detail/:id" element={<Detail />} />
       </Route>
-    </> 
+    </>
   )
 );
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
-      <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </Provider>
 );

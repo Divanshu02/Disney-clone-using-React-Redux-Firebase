@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import disneylogo from "../images/logo.svg";
 import homeIcon from "../images/home-icon.svg";
@@ -9,10 +9,10 @@ import movieIcon from "../images/movie-icon.svg";
 import seriesIcon from "../images/series-icon.svg";
 import FirebaseContext from "../context/FirebaseContext";
 import { useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
-import Select, { components } from "react-select";
+import Select from "react-select";
 
 const Header = () => {
   const { SigninWithGoogle, SignoutUser } = useContext(FirebaseContext);
@@ -20,7 +20,7 @@ const Header = () => {
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  console.log("VISIBILITY", isOptionsVisible);
+  // console.log("VISIBILITY", isOptionsVisible);
   // console.log(SigninWithGoogle)
 
   useEffect(() => {
@@ -28,14 +28,13 @@ const Header = () => {
       setWindowWidth(window.innerWidth);
     };
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Cleanup event listener on component unmount
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
-
 
   const options = [
     { value: "/home", label: "Home", icon: homeIcon },
@@ -54,6 +53,7 @@ const Header = () => {
       </ListContainer>
     </div>
   );
+
   return (
     <>
       <Nav>
@@ -63,6 +63,7 @@ const Header = () => {
               <img src={disneylogo} alt="disneyLogo" />
             </Logo>
           </NavLink>
+          {/* Responsive */}
           {name && windowWidth <= 768 ? (
             <div
               style={{
@@ -112,10 +113,11 @@ const Header = () => {
                     // borderColor: "green",
                     width: isOptionsVisible ? "140px" : "0",
                     // display: isOptionsVisible ? "flex" : "none",
-                    opacity:isOptionsVisible ? "1" : "0",
-                    transition: isOptionsVisible?('width 0.4s ease-in, opacity 0.4s ease-in'):('width 0.4s ease-out, opacity 0.4s ease-out'),
+                    opacity: isOptionsVisible ? "1" : "0",
+                    transition: isOptionsVisible
+                      ? "width 0.4s ease-in, opacity 0.4s ease-in"
+                      : "width 0.4s ease-out, opacity 0.4s ease-out",
                     // maxHeight:isOptionsVisible?"300px":"0px"
-                          
                   }),
                 }}
               />
@@ -124,7 +126,7 @@ const Header = () => {
             ""
           )}
         </div>
-
+        {/* w>768 */}
         {!name ? (
           <Login onClick={SigninWithGoogle}>LOGIN</Login>
         ) : (
@@ -154,9 +156,7 @@ const Header = () => {
                 <img src={seriesIcon} alt="seriesIcon" />
                 <span>SERIES</span>
               </NavLink>
-              <NavLink
-                to="/upcoming"
-              >
+              <NavLink to="/upcoming">
                 <img src={movieIcon} alt="movieIcon" />
                 <span>Upcoming</span>
               </NavLink>
@@ -303,8 +303,13 @@ const Navmenu = styled.div`
 
   a.active span {
     font-weight: bold;
-    color: #df8686;
+    color: #de6565;
   }
+  a.active span:before {
+    font-weight: bold;
+    background-color: #954040;
+  }
+
   @media (max-width: 768px) {
     display: none;
   }

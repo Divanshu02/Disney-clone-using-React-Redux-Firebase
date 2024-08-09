@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataFetchContext from "../context/DataFetchContext";
 import { ThreeCircles } from "react-loader-spinner";
@@ -42,11 +42,11 @@ const Trending = () => {
                 .map((trending_movie, key) => {
                   return (
                     <Content key={key}>
-                      <Link to={`/detail/${trending_movie.id}`}>
+                      <NavLink to={`/detail/${trending_movie.id}`}>
                         <img
                           src={`https://image.tmdb.org/t/p/original${trending_movie.backdrop_path}`}
                         ></img>
-                      </Link>
+                      </NavLink>
                     </Content>
                   );
                 })}

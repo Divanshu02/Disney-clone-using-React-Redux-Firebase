@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import homeBg from "../images/home-background.png";
 import ImgSlider from "./ImgSlider";
@@ -10,7 +10,6 @@ import Trending from "./Trending";
 import DataFetchContextProvider from "../context/DataFetchContextProvider";
 
 const Home = () => {
-
   return (
     <DataFetchContextProvider>
       <Container>

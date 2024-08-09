@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import img from "../images/3d-render-thumb-up-sign-isolated-hand-gesture.jpg";
 import { ThreeCircles } from "react-loader-spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Detail = () => {
   const [movieDetails, setMovieDetails] = useState();
-  const [tvDetails, setTvDetails] = useState("");
+  const navigate = useNavigate();
   const { id } = useParams();
-  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=90c1dcb9cc63b070b76bdf3e245e31c0`;
-  const url2 = `https://api.themoviedb.org/3/tv/${id}?api_key=90c1dcb9cc63b070b76bdf3e245e31c0`;
+  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}`;
 
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        console.log("detail", data);
+        // console.log("detail", data);
         setMovieDetails(data);
-      });
-    fetch(url2)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("detail", data);
-        setTvDetails(data);
       });
   }, []);
 
@@ -41,6 +36,15 @@ const Detail = () => {
             ""
           )}
           <Content>
+            <div>
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                size="2x"
+                style={{ position: "absolute", top: "-80%", cursor: "pointer" }}
+                onClick={() => navigate(-1)}
+              />
+            </div>
+
             <h2>{movieDetails.original_title}</h2>
             <p>
               {movieDetails.overview && movieDetails.overview.slice(0, 200)}
@@ -53,7 +57,7 @@ const Detail = () => {
                 width={40}
                 style={{ borderRadius: "20px" }}
               />
-              <p>{movieDetails.popularity}</p>
+              {/* <p>{movieDetails.popularity}</p> */}
             </div>
           </Content>
         </div>

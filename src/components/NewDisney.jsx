@@ -14,7 +14,7 @@ const NewDisney = () => {
   const location = useLocation();
   const { pathname } = location;
   const data = useContext(DataFetchContext);
-  console.log("data", data);
+  // console.log("data", data);
   let { top_rated_movies, loader } = data;
 
   // console.log("recommends::",popular_movies.results)
@@ -41,7 +41,10 @@ const NewDisney = () => {
           <Wrapper>
             {top_rated_movies.results &&
               top_rated_movies.results
-                .slice(pathname==="/series"?7:8, pathname==="/series"?-1:16)
+                .slice(
+                  pathname === "/series" ? 7 : 8,
+                  pathname === "/series" ? -1 : 16
+                )
                 .map((top_rated_movie, key) => {
                   return (
                     <Content key={key}>
