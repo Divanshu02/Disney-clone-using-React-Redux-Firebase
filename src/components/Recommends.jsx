@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataFetchContext from "../context/DataFetchContext";
@@ -11,6 +11,7 @@ const Recommends = () => {
   // console.log("location", hash, pathname, search);
   // console.log("data", data);
   let { popular_movies, loader } = data;
+
 
   // console.log("recommends::",popular_movies.results)
   return (
@@ -33,8 +34,8 @@ const Recommends = () => {
             <h3 style={{ fontSize: "2em" }}>Recommended for you</h3>
           )}
 
-          {popular_movies && (
-            <Wrapper>
+           {popular_movies && (
+            <Wrapper>  
               {popular_movies.results &&
                 popular_movies.results
                   .slice(
