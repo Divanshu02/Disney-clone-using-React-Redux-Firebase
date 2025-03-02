@@ -3,15 +3,29 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataFetchContext from "../context/DataFetchContext";
 import { ThreeCircles } from "react-loader-spinner";
+import { BsBookmarkStar } from "react-icons/bs";
+import { BsBookmarkStarFill } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { TOGGLEMOVIESWATCHLIST } from "../Redux/slices/userWatchlistSlice";
+
 
 const Originals = () => {
+  const dispatch = useDispatch();
   const data = useContext(DataFetchContext);
   const location = useLocation();
   const { pathname } = location;
   // console.log("data", data);
   let { originals, loader } = data;
 
+  const addedWatchlists = useSelector(
+    (state) => state.userWatchlistSliceReducer.addedWatchlistsArr
+  );
+  const isBookmarked = (card) => addedWatchlists.some((b) => b.id === card.id);
+
+  // console.log("wwwww--", addedWatchlists);
+
   // console.log("recommends::",popular_movies.results)
+
   return (
     <>
       {loader ? (
@@ -40,8 +54,30 @@ const Originals = () => {
                   pathname === "/originals" ? 30 : 16
                 )
                 .map((original, key) => {
+                  // console.log("original--", original);
                   return (
                     <Content key={key}>
+                      <button
+                        style={{
+                          color: "white",
+                          fontSize: "25px",
+                          cursor: "pointer",
+                          position: "absolute",
+                          // right: "0px",
+                          top: "11rem",
+                          right: "0px",
+                          borderRadius: "5px",
+                        }}
+                        onClick={() =>
+                          dispatch(TOGGLEMOVIESWATCHLIST({ original }))
+                        }
+                      >
+                        {isBookmarked(original) ? (
+                          <BsBookmarkStarFill />
+                        ) : (
+                          <BsBookmarkStar />
+                        )}
+                      </button>
                       <Link to={`/detail/${original.id}`}>
                         <img
                           src={`https://image.tmdb.org/t/p/original${original.backdrop_path}`}
@@ -76,6 +112,7 @@ const Wrapper = styled.div`
 const Content = styled.div`
   /* min-width: 20vw;
   min-height: 40vh; */
+
   width: 310px;
   height: 200px;
   cursor: pointer;

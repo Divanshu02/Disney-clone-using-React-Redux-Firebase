@@ -3,13 +3,22 @@ import { NavLink, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataFetchContext from "../context/DataFetchContext";
 import { ThreeCircles } from "react-loader-spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { TOGGLEMOVIESWATCHLIST } from "../Redux/slices/userWatchlistSlice";
+import { BsBookmarkStar } from "react-icons/bs";
+import { BsBookmarkStarFill } from "react-icons/bs";
 
 const Trending = () => {
+  const dispatch = useDispatch();
   const data = useContext(DataFetchContext);
   const location = useLocation();
   const { pathname } = location;
   // console.log("data", data);
   let { trending_movies, loader } = data;
+  const addedWatchlists = useSelector(
+    (state) => state.userWatchlistSliceReducer.addedWatchlistsArr
+  );
+  const isBookmarked = (card) => addedWatchlists.some((b) => b.id === card.id);
 
   // console.log("recommends::",popular_movies.results)
   return (
@@ -41,7 +50,28 @@ const Trending = () => {
                 )
                 .map((trending_movie, key) => {
                   return (
-                    <Content key={key}>
+                    <Content key={trending_movie.id}>
+                      <button
+                        style={{
+                          color: "white",
+                          fontSize: "25px",
+                          cursor: "pointer",
+                          position: "absolute",
+                          // right: "0px",
+                          top: "11rem",
+                          right: "0px",
+                          borderRadius: "5px",
+                        }}
+                        onClick={() =>
+                          dispatch(TOGGLEMOVIESWATCHLIST({ trending_movie }))
+                        }
+                      >
+                        {isBookmarked(trending_movie) ? (
+                          <BsBookmarkStarFill />
+                        ) : (
+                          <BsBookmarkStar />
+                        )}
+                      </button>
                       <NavLink to={`/detail/${trending_movie.id}`}>
                         <img
                           src={`https://image.tmdb.org/t/p/original${trending_movie.backdrop_path}`}

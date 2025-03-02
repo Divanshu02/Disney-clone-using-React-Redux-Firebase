@@ -3,8 +3,14 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataFetchContext from "../context/DataFetchContext";
 import { ThreeCircles } from "react-loader-spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { TOGGLEMOVIESWATCHLIST } from "../Redux/slices/userWatchlistSlice";
+import { BsBookmarkStar } from "react-icons/bs";
+import { BsBookmarkStarFill } from "react-icons/bs";
 
 const Recommends = () => {
+  const dispatch = useDispatch();
+
   const data = useContext(DataFetchContext);
   const location = useLocation();
   const { hash, pathname, search } = location;
@@ -12,8 +18,13 @@ const Recommends = () => {
   // console.log("data", data);
   let { popular_movies, loader } = data;
 
+  const addedWatchlists = useSelector(
+    (state) => state.userWatchlistSliceReducer.addedWatchlistsArr
+  );
+  const isBookmarked = (card) => addedWatchlists.some((b) => b.id === card.id);
 
   // console.log("recommends::",popular_movies.results)
+  console.log("wwwww--", addedWatchlists);
   return (
     <>
       {loader ? (
@@ -34,8 +45,8 @@ const Recommends = () => {
             <h3 style={{ fontSize: "2em" }}>Recommended for you</h3>
           )}
 
-           {popular_movies && (
-            <Wrapper>  
+          {popular_movies && (
+            <Wrapper>
               {popular_movies.results &&
                 popular_movies.results
                   .slice(
@@ -45,6 +56,27 @@ const Recommends = () => {
                   .map((pop_movie, key) => {
                     return (
                       <Content key={key}>
+                        <button
+                          style={{
+                            color: "white",
+                            fontSize: "25px",
+                            cursor: "pointer",
+                            position: "absolute",
+                            // right: "0px",
+                            top: "11rem",
+                            right: "0px",
+                            borderRadius: "5px",
+                          }}
+                          onClick={() =>
+                            dispatch(TOGGLEMOVIESWATCHLIST({ pop_movie }))
+                          }
+                        >
+                          {isBookmarked(pop_movie) ? (
+                            <BsBookmarkStarFill />
+                          ) : (
+                            <BsBookmarkStar />
+                          )}
+                        </button>
                         <Link to={`/detail/${pop_movie.id}`}>
                           <img
                             src={`https://image.tmdb.org/t/p/original${pop_movie.backdrop_path}`}

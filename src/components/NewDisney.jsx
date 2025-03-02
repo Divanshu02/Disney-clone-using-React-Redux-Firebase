@@ -4,18 +4,27 @@ import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import DataFetchContext from "../context/DataFetchContext";
 import { ThreeCircles } from "react-loader-spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { TOGGLEMOVIESWATCHLIST } from "../Redux/slices/userWatchlistSlice";
+import { BsBookmarkStar } from "react-icons/bs";
+import { BsBookmarkStarFill } from "react-icons/bs";
 
 const NewDisney = () => {
   // useLocation() returns an object that contains information on the current page URL.
   //   pathname: the part that comes after the domain name, e.g., /products.
   // search: the query string, e.g., ?id=5.
   // hash: the hash, e.g., #pricing
-
+  const dispatch = useDispatch();
   const location = useLocation();
   const { pathname } = location;
   const data = useContext(DataFetchContext);
   // console.log("data", data);
   let { top_rated_movies, loader } = data;
+
+  const addedWatchlists = useSelector(
+    (state) => state.userWatchlistSliceReducer.addedWatchlistsArr
+  );
+  const isBookmarked = (card) => addedWatchlists.some((b) => b.id === card.id);
 
   // console.log("recommends::",popular_movies.results)
   return (
@@ -47,7 +56,28 @@ const NewDisney = () => {
                 )
                 .map((top_rated_movie, key) => {
                   return (
-                    <Content key={key}>
+                    <Content key={top_rated_movie.id}>
+                      <button
+                        style={{
+                          color: "white",
+                          fontSize: "25px",
+                          cursor: "pointer",
+                          position: "absolute",
+                          // right: "0px",
+                          top: "11rem",
+                          right: "0px",
+                          borderRadius: "5px",
+                        }}
+                        onClick={() =>
+                          dispatch(TOGGLEMOVIESWATCHLIST({ top_rated_movie }))
+                        }
+                      >
+                        {isBookmarked(top_rated_movie) ? (
+                          <BsBookmarkStarFill />
+                        ) : (
+                          <BsBookmarkStar />
+                        )}
+                      </button>
                       <Link to={`/detail/${top_rated_movie.id}`}>
                         <img
                           src={`https://image.tmdb.org/t/p/original${top_rated_movie.backdrop_path}`}

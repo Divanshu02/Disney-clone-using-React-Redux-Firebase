@@ -13,10 +13,11 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 import Select from "react-select";
+import { CiBookmarkPlus } from "react-icons/ci";
 
 const Header = () => {
   const { SigninWithGoogle, SignoutUser } = useContext(FirebaseContext);
-  const { name, photo } = useSelector((state) => state);
+  const { name, photo } = useSelector((state) => state.userSliceReducer);
   const [isOptionsVisible, setIsOptionsVisible] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -159,6 +160,10 @@ const Header = () => {
               <NavLink to="/upcoming">
                 <img src={movieIcon} alt="movieIcon" />
                 <span>Upcoming</span>
+              </NavLink>
+              <NavLink to="/watchlists">
+                <CiBookmarkPlus />
+                <span>My watchlists</span>
               </NavLink>
             </Navmenu>
             <SignOut>
