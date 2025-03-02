@@ -4,7 +4,6 @@ import FirebaseContextProvider from "./context/FirebaseContextProvider";
 import DataFetchContextProvider from "./context/DataFetchContextProvider";
 
 function App() {
-  console.log("Hello");
   return (
     <FirebaseContextProvider>
       <DataFetchContextProvider>
