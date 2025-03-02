@@ -17,7 +17,7 @@ const userWatchlistSlice = createSlice({
         const isBookmarked = state.addedWatchlistsArr.some(
           (obj) => obj.id === action.payload.original.id
         );
-        console.log("ISBOOKMARKED--", isBookmarked);
+        // console.log("ISBOOKMARKED--", isBookmarked);
         if (isBookmarked) {
           const newWatchlists = state.addedWatchlistsArr.filter(
             (obj) => obj.id !== action.payload.original.id
@@ -30,7 +30,7 @@ const userWatchlistSlice = createSlice({
         const isBookmarked = state.addedWatchlistsArr.some(
           (obj) => obj.id === action.payload.pop_movie.id
         );
-        console.log("ISBOOKMARKED--", isBookmarked);
+        // console.log("ISBOOKMARKED--", isBookmarked);
         if (isBookmarked) {
           const newWatchlists = state.addedWatchlistsArr.filter(
             (obj) => obj.id !== action.payload.pop_movie.id
@@ -43,7 +43,7 @@ const userWatchlistSlice = createSlice({
         const isBookmarked = state.addedWatchlistsArr.some(
           (obj) => obj.id === action.payload.top_rated_movie.id
         );
-        console.log("ISBOOKMARKED--", isBookmarked);
+        // console.log("ISBOOKMARKED--", isBookmarked);
         if (isBookmarked) {
           const newWatchlists = state.addedWatchlistsArr.filter(
             (obj) => obj.id !== action.payload.top_rated_movie.id
@@ -56,7 +56,7 @@ const userWatchlistSlice = createSlice({
         const isBookmarked = state.addedWatchlistsArr.some(
           (obj) => obj.id === action.payload.trending_movie.id
         );
-        console.log("ISBOOKMARKED--", isBookmarked);
+        // console.log("ISBOOKMARKED--", isBookmarked);
         if (isBookmarked) {
           const newWatchlists = state.addedWatchlistsArr.filter(
             (obj) => obj.id !== action.payload.trending_movie.id

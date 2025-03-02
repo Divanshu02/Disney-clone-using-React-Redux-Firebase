@@ -24,7 +24,7 @@ const Recommends = () => {
   const isBookmarked = (card) => addedWatchlists.some((b) => b.id === card.id);
 
   // console.log("recommends::",popular_movies.results)
-  console.log("wwwww--", addedWatchlists);
+  // console.log("wwwww--", addedWatchlists);
   return (
     <>
       {loader ? (

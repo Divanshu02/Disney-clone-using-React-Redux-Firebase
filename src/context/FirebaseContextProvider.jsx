@@ -71,7 +71,7 @@ const FirebaseContextProvider = ({ children }) => {
         setUser(user);
         navigate("/home")
       } else {
-        console.log("user is signed out", user);
+        // console.log("user is signed out", user);
         navigate("/")
       } 
     });

@@ -9,7 +9,7 @@ const Watchlists = () => {
   const addedWatchlists = useSelector(
     (state) => state.userWatchlistSliceReducer.addedWatchlistsArr
   );
-  console.log("watchlists arr--", addedWatchlists);
+//   console.log("watchlists arr--", addedWatchlists);
   return (
     <div>
       <Wrapper>
