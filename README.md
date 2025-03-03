@@ -1,4 +1,5 @@
-# PROJECT LIVE LINK:- https://disney-clone-using-react-redux-firebase.vercel.app/
+# PROJECT LIVE LINK:- 
+This project is live on vercel :- https://disney-clone-using-react-redux-firebase.vercel.app/
 
 
 # Getting Started with Create React App
